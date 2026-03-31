@@ -7,18 +7,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- 배경 별빛 (CSS로 생성됨) -->
+    <div class="stars-bg"></div>
+
     <div id="app">
-        <!-- 1. Intro View -->
+        <!-- 1. 메인 화면 -->
         <div id="view-intro" class="view active">
             <div class="glass-card">
                 <h1>행성 재판 체험</h1>
-                <p>당신은 이제 우주 법정의 판사입니다.<br>천체들이 행성이 될 자격이 있는지 판결해 주세요.</p>
-                <input type="text" id="student-id" placeholder="학번을 입력하세요 (예: 20401)" maxlength="10">
+                <p>당신은 이제 우주 법정의 판사입니다.<br>천체들이 행성 자격이 있는지 판결해 주세요.</p>
+                <div class="input-group">
+                    <input type="text" id="student-id" placeholder="학번을 입력하세요 (예: 20401)" maxlength="10">
+                </div>
                 <button class="btn" onclick="startApp()">재판 시작하기</button>
             </div>
         </div>
 
-        <!-- 2. Selection View -->
+        <!-- 2. 행성 선택 목록 -->
         <div id="view-selection" class="view">
             <div class="glass-card">
                 <h2>행성 판결하기</h2>
@@ -28,40 +33,39 @@
             </div>
         </div>
 
-        <!-- 3. Quiz View -->
+        <!-- 3. 판결 진행 화면 -->
         <div id="view-quiz" class="view">
             <div class="glass-card">
                 <div class="planet-preview-container">
                     <img id="quiz-planet-img" src="" alt="" class="planet-preview-img">
                 </div>
                 <h2 id="quiz-planet-name"></h2>
-                <div id="quiz-container">
-                    <!-- 질문이 자바스크립트로 들어갑니다 -->
-                </div>
+                <div id="quiz-container"></div>
                 <button class="btn" onclick="submitTrial()">판결 확정</button>
-                <button class="btn" onclick="goBack()" style="background:#555;">목록으로</button>
+                <button class="btn" onclick="goBack()" style="background:#555; margin-top:10px;">목록으로</button>
             </div>
         </div>
 
-        <!-- 4. Result View -->
+        <!-- 4. 최종 결과 화면 -->
         <div id="view-result" class="view">
             <div class="glass-card">
                 <h2>전체 판결 결과</h2>
-                <div id="result-score" style="font-size:3rem; color:#00d2ff; margin:20px 0;">0 / 8</div>
+                <div id="result-score" style="font-size:3.5rem; color:#00d2ff; margin:20px 0;">0 / 8</div>
                 <p id="result-comment"></p>
-                <button class="btn" onclick="location.reload()">다시 하기</button>
+                <button class="btn" onclick="location.reload()">처음부터 다시 하기</button>
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- 결과 모달 -->
         <div id="modal-verdict" class="modal-overlay">
-            <div class="glass-card">
+            <div class="glass-card modal-content">
                 <h2 id="modal-title"></h2>
-                <p id="modal-desc" style="margin:15px 0;"></p>
+                <p id="modal-desc" style="margin:20px 0; line-height:1.6;"></p>
                 <button class="btn" onclick="closeModal()">확인</button>
             </div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
