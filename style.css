@@ -1,7 +1,7 @@
 /* 사진 크기 및 비율 완벽 보정 */
 .planet-thumb-container {
-    width: 80px;   /* 크기 조절: 너무 크면 60px로 줄여주세요 */
-    height: 80px;
+    width: 60px;   /* 크기 조절: 너무 크면 60px로 줄여주세요 */
+    height: 60px;
     margin: 0 auto 10px;
     border-radius: 50%;
     overflow: hidden;
