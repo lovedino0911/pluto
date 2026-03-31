@@ -1,82 +1,35 @@
-/* style.css: Planet Trial Experience Premium Cosmic Design System */
-
+/* style.css: 최종 고정 버전 */
 :root {
   --bg-color: #050b18;
   --card-bg: rgba(255, 255, 255, 0.05);
   --glass-border: rgba(255, 255, 255, 0.1);
   --primary-glow: #6c5ce7;
   --planet-glow: #00d2ff;
-  --dwarf-glow: #e1b12c;
-  --wrong-glow: #ff4757;
   --text-main: #ffffff;
   --text-dim: #b0b0b0;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
 
 body {
   background: radial-gradient(circle at center, #0b1e3e 0%, #050b18 100%);
   color: var(--text-main);
   min-height: 100vh;
-  overflow-x: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
 }
 
-/* Background Stars Animation */
-.stars-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background: black;
-  overflow: hidden;
-}
+.stars-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: black; }
+.star { position: absolute; background: white; border-radius: 50%; opacity: 0.5; animation: twinkle var(--duration) infinite ease-in-out; }
+@keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
 
-.star {
-  position: absolute;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.5;
-  animation: twinkle var(--duration) infinite ease-in-out;
-}
+#app { width: 100%; max-width: 500px; padding: 20px; }
+.view { display: none; animation: fadeIn 0.5s ease-out forwards; }
+.view.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
-}
-
-/* Container & Layout */
-#app {
-  width: 100%;
-  max-width: 500px;
-  padding: 20px;
-  text-align: center;
-}
-
-.view {
-  display: none;
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-.view.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Glassmorphism Card */
 .glass-card {
   background: var(--card-bg);
   backdrop-filter: blur(15px);
@@ -87,68 +40,6 @@ body {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
 }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, #fff 0%, #00d2ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.3));
-}
-
-p {
-  color: var(--text-dim);
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-
-/* Form Styles */
-.input-group {
-  margin-bottom: 2rem;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  color: white;
-  font-size: 1.1rem;
-  outline: none;
-  transition: 0.3s;
-}
-
-input[type="text"]:focus {
-  border-color: var(--planet-glow);
-  box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
-}
-
-.btn {
-  width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
-  background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(108, 92, 231, 0.5);
-}
-
-.btn:active {
-  transform: translateY(0);
-}
-
-/* Planet Selection List */
 .planet-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -162,96 +53,47 @@ input[type="text"]:focus {
   border-radius: 16px;
   padding: 15px;
   cursor: pointer;
-  transition: 0.3s;
+  text-align: center;
 }
 
-.planet-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: var(--planet-glow);
-}
-
-.planet-item.completed {
-  opacity: 0.6;
-  border-color: #4cd137;
-}
-
-.planet-thumb {
-  width: 60px;
-  height: 60px;
+.planet-thumb-container {
+  width: 80px;
+  height: 80px;
   margin: 0 auto 10px;
-  background-size: cover;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  border: 2px solid var(--glass-border);
 }
 
-/* Quiz Room Styles */
-.quiz-header {
-  margin-bottom: 20px;
+.planet-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.planet-preview {
-  width: 120px;
-  height: 120px;
+.planet-preview-container {
+  width: 150px;
+  height: 150px;
   margin: 0 auto 20px;
-  background-size: cover;
   border-radius: 50%;
-  box-shadow: 0 0 30px rgba(0, 210, 255, 0.4);
+  overflow: hidden;
+  box-shadow: 0 0 30px var(--planet-glow);
 }
 
-.question-card {
-  margin-bottom: 15px;
-  text-align: left;
+.planet-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.question-text {
-  font-weight: 600;
-  margin-bottom: 10px;
-  display: block;
-}
+.btn { width: 100%; padding: 15px; border: none; border-radius: 12px; background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%); color: white; font-weight: bold; cursor: pointer; margin-top: 10px; }
+.input-group input { width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--glass-border); color: white; border-radius: 12px; margin-bottom: 10px; }
+.option-group { display: flex; gap: 10px; margin-top: 5px; }
+.option-btn { flex: 1; padding: 10px; background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); color: white; border-radius: 8px; cursor: pointer; }
+.option-btn.selected { background: var(--primary-glow); }
 
-.option-group {
-  display: flex;
-  gap: 10px;
-}
-
-.option-btn {
-  flex: 1;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--glass-border);
-  border-radius: 10px;
-  color: white;
-  cursor: pointer;
-}
-
-.option-btn.selected {
-  background: var(--primary-glow);
-  border-color: var(--primary-glow);
-}
-
-/* Result View */
-.result-score {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 20px 0;
-  color: var(--planet-glow);
-}
-
-.snack-message {
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  border: 2px dashed var(--dwarf-glow);
-  margin-top: 20px;
-  display: none;
-}
-
-.snack-message.show {
-  display: block;
-  animation: bounce 1s infinite alternate;
-}
-
-@keyframes bounce {
-  from { transform: scale(1); }
-  to { transform: scale(1.05); }
-}
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 100; }
+.modal-content { max-width: 400px; width: 90%; text-align: center; }
+.result-score { font-size: 3rem; color: var(--planet-glow); margin: 20px 0; }
+.snack-badge { display: none; background: rgba(76, 209, 55, 0.2); border: 1px solid #4cd137; padding: 15px; border-radius: 12px; margin: 15px 0; }
+.snack-badge.show { display: block; }
