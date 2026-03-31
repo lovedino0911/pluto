@@ -82,24 +82,20 @@ function submitTrial() {
     const isCorrect = JSON.stringify(currentSelections) === JSON.stringify(p.answer);
     userAnswers[currentPlanetIndex] = isCorrect;
     
-    // 이 부분이 핵심입니다!
     const modalContent = document.querySelector('.modal-content');
-    modalContent.classList.remove('correct', 'incorrect'); // 이전 기록 초기화
+    modalContent.classList.remove('correct', 'incorrect'); // 이전 색상 지우기
 
     if (isCorrect) {
         modalContent.classList.add('correct');
-        document.getElementById('modal-title').innerText = `✅ ${p.name} 판결 성공`;
+        document.getElementById('modal-title').innerText = `✅ ${p.name} 판결 성공!`;
     } else {
         modalContent.classList.add('incorrect');
         document.getElementById('modal-title').innerText = `❌ ${p.name} 판결 오답`;
     }
 
     document.getElementById('modal-desc').innerText = p.desc;
-    
-    // 기존에 있던 라인: ID가 'modal-verdict' 인지 확인해주세요!
     document.getElementById('modal-verdict').classList.add('active'); 
 }
-
 
 function closeModal() {
     document.getElementById('modal-verdict').classList.remove('active');
@@ -114,6 +110,7 @@ function showFinalResult() {
     document.getElementById('result-score').innerText = `${score} / ${planets.length}`;
     document.getElementById('result-comment').innerText = score === planets.length ? "완벽한 천문학 판사님! 모든 판결이 정확합니다." : "고생하셨습니다! 몇 가지 판결을 더 복습해볼까요?";
     
+    // 이 부분은 기존 구글 폼 제출 코드입니다
     const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdcSbki2CwzjerCL4eump0MMusiRQabQ9i8rNufK9s-IgyJHQ/formResponse";
     const formData = new FormData();
     formData.append("entry.1681062244", studentId);
