@@ -1,0 +1,171 @@
+/* style.css: Planet Trial Ultimate Premium - Fixed Circular Images */
+:root {
+  --bg-color: #050b18;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --primary-glow: #6c5ce7;
+  --planet-accent: #00d2ff;
+  --text-main: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
+
+body {
+  background: radial-gradient(circle at center, #0b1e3e 0%, #050b18 100%);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* 1. Twinkling Background Stars */
+.stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: black;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: twinkling var(--duration) infinite ease-in-out;
+}
+
+@keyframes twinkling {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* 2. Glassmorphism Design */
+#app { width: 100%; max-width: 480px; padding: 20px; text-align: center; }
+
+.view { display: none; width: 100%; animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.view.active { display: block !important; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--glass-border);
+  border-radius: 32px;
+  padding: 35px 25px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+}
+
+h1 { font-size: 2.2rem; margin-bottom: 0.8rem; background: linear-gradient(135deg, #fff 0%, #a29bfe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+p { color: #b0b0b0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; }
+
+/* 3. Circular Image Fix (IMPORTANT) */
+.planet-thumb-container {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 12px;
+  border-radius: 50%; /* Perfect Circle */
+  overflow: hidden;   /* Clip the image */
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: black;
+  transition: transform 0.3s;
+}
+
+.planet-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This makes any aspect ratio fit the circle perfectly */
+}
+
+.planet-item:hover .planet-thumb-container {
+  transform: scale(1.1) rotate(5deg);
+  border-color: var(--planet-accent);
+}
+
+.planet-preview-container {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 210, 255, 0.4);
+  background: black;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  animation: float 4s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.planet-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Circular crop of original image */
+}
+
+/* 4. Layouts and Buttons */
+.planet-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.planet-item {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  padding: 15px 10px;
+  cursor: pointer;
+}
+
+.planet-item strong { display: block; font-size: 1rem; color: #fff; margin-top: 5px; }
+
+.btn {
+  width: 100%; padding: 18px; border: none; border-radius: 16px;
+  background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+  color: white; font-weight: bold; cursor: pointer; font-size: 1.1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:active { transform: scale(0.98); }
+
+input {
+  width: 100%; padding: 16px; background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border); border-radius: 12px;
+  color: white; text-align: center; font-size: 1.2rem; outline: none; margin-bottom: 20px;
+}
+
+/* Question Options */
+.option-group { display: flex; gap: 10px; margin-top: 10px; }
+.option-btn {
+  flex: 1; padding: 12px; background: rgba(255,255,255,0.05);
+  border: 1px solid var(--glass-border); border-radius: 10px; color: white; cursor: pointer;
+}
+
+.option-btn.selected { background: var(--primary-glow); border-color: var(--primary-glow); }
+
+/* Reward & Modal */
+.snack-message {
+  display: none;
+  background: rgba(76, 209, 53, 0.15);
+  border: 1px solid #4cd135;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 20px 0;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+
+.result-score { font-size: 3.5rem; color: #00d2ff; margin: 20px 0; font-weight: 800; }
