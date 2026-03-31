@@ -8,9 +8,9 @@
 </head>
 <body>
     <div class="stars-container" id="stars"></div>
-
+    
     <div id="app">
-        <!-- 1. Intro View: 학번 입력 -->
+        <!-- 1. Intro View -->
         <div id="view-intro" class="view active">
             <div class="glass-card">
                 <h1>행성 재판 체험</h1>
@@ -27,12 +27,8 @@
             <div class="glass-card">
                 <h2>행성 판결하기</h2>
                 <p>판결을 내릴 천체를 선택하세요.</p>
-                <div class="planet-list" id="planet-list">
-                    <!-- Planet items will be injected here -->
-                </div>
-                <div style="margin-top: 20px;">
-                    <button class="btn" id="btn-final-verdict" onclick="showFinalResult()" style="display: none;">최종 판결문 제출</button>
-                </div>
+                <div class="planet-list" id="planet-list"></div>
+                <button id="btn-final-verdict" class="btn" style="display:none; margin-top: 20px; background: #4cd137;" onclick="showFinalResult()">최종 판결문 제출</button>
             </div>
         </div>
 
@@ -40,12 +36,14 @@
         <div id="view-quiz" class="view">
             <div class="glass-card">
                 <div class="quiz-header">
-                    <div id="quiz-planet-preview" class="planet-preview"></div>
+                    <div class="planet-preview-container">
+                        <img id="quiz-planet-img" src="" alt="행성 이미지" class="planet-preview-img">
+                    </div>
                     <h2 id="quiz-planet-name">천체 이름</h2>
                 </div>
                 
                 <div class="question-card">
-                    <span class="question-text">1. 이 천체는 태양을 공전합니까?</span>
+                    <span class="question-text">1. 태양을 공전하는가?</span>
                     <div class="option-group">
                         <button class="option-btn" onclick="selectOption(0, true)">예</button>
                         <button class="option-btn" onclick="selectOption(0, false)">아니오</button>
@@ -53,7 +51,7 @@
                 </div>
 
                 <div class="question-card">
-                    <span class="question-text">2. 이 천체는 충분한 질량을 가져 구형입니까?</span>
+                    <span class="question-text">2. 충분한 질량으로 구형을 유지하는가?</span>
                     <div class="option-group">
                         <button class="option-btn" onclick="selectOption(1, true)">예</button>
                         <button class="option-btn" onclick="selectOption(1, false)">아니오</button>
@@ -61,41 +59,41 @@
                 </div>
 
                 <div class="question-card">
-                    <span class="question-text">3. 이 천체는 궤도 주변의 다른 천체를 청소했습니까?</span>
+                    <span class="question-text">3. 궤도 주변의 다른 천체를 지배하는가?</span>
                     <div class="option-group">
                         <button class="option-btn" onclick="selectOption(2, true)">예</button>
                         <button class="option-btn" onclick="selectOption(2, false)">아니오</button>
                     </div>
                 </div>
 
-                <button class="btn" onclick="submitTrial()" style="margin-top: 10px;">판결 완료</button>
-                <button class="btn" onclick="goBack()" style="margin-top: 10px; background: none; box-shadow: none; border: 1px solid var(--glass-border);">취소</button>
-            </div>
-        </div>
-
-        <!-- 5. Explanation Modal -->
-        <div id="modal-verdict" class="view" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center;">
-            <div class="glass-card" style="max-width: 400px; border-color: var(--primary-glow); box-shadow: 0 0 50px rgba(108, 92, 231, 0.4);">
-                <h2 id="modal-title" style="margin-bottom: 20px;">판결 결과</h2>
-                <p id="modal-desc" style="color: white; font-size: 1.1rem; text-align: left; margin-bottom: 20px;"></p>
-                <button class="btn" onclick="closeModal()">확인</button>
+                <button class="btn" onclick="submitTrial()" style="margin-top: 10px;">판결 내리기</button>
+                <button class="btn" onclick="goBack()" style="margin-top: 10px; background: #636e72;">목록으로</button>
             </div>
         </div>
 
         <!-- 4. Result View -->
         <div id="view-result" class="view">
             <div class="glass-card">
-                <h1>최종 재판 결과</h1>
-                <p id="result-student-info">학번: </p>
+                <h2>전체 판결 결과</h2>
+                <div id="result-student-info" style="margin-bottom: 10px; font-weight: bold;"></div>
                 <div class="result-score" id="result-score">0 / 8</div>
-                <p id="result-comment">모든 천체를 올바르게 판결했습니다!</p>
+                <p id="result-comment">훌륭한 판결입니다!</p>
                 
-                <div id="snack-award" class="snack-message">
-                    <h3>🏆 대단합니다! 🏆</h3>
-                    <p>모든 판결을 완벽하게 마쳤습니다.<br><strong>지금 바로 간식을 수령하러 오세요!</strong></p>
+                <div id="snack-award" class="snack-badge">
+                    <span>🍭 간식 당첨! 🍭</span>
+                    <p>축하합니다! 완벽한 판결로 간식 교환권을 획득하셨습니다!</p>
                 </div>
-
+                
                 <button class="btn" onclick="restartApp()" style="margin-top: 20px;">처음으로</button>
+            </div>
+        </div>
+
+        <!-- Verdict Modal -->
+        <div id="modal-verdict" class="modal-overlay">
+            <div class="modal-content glass-card">
+                <h2 id="modal-title">판결 결과</h2>
+                <p id="modal-desc"></p>
+                <button class="btn" onclick="closeModal()">확인</button>
             </div>
         </div>
     </div>
