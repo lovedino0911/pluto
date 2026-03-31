@@ -1,212 +1,93 @@
-/* Pluto Planet Trial - High Performance & Responsive Version */
+/* style.css: Planet Trial Experience Original Design */
 
 :root {
-  --bg-dark: #05070a;
-  --primary-purple: #7d5fff;
-  --accent-cyan: #00d2ff;
-  --glass-bg: rgba(15, 15, 25, 0.7); /* 블러 대신 배경색 농도 조절로 성능 확보 */
+  --bg-color: #050b18;
+  --card-bg: rgba(255, 255, 255, 0.05);
   --glass-border: rgba(255, 255, 255, 0.1);
-  --text-main: #f0f0f0;
-  --font-title: 'Orbitron', sans-serif;
-  --font-body: 'Pretendard', sans-serif;
+  --primary-glow: #6c5ce7;
+  --planet-glow: #00d2ff;
+  --dwarf-glow: #e1b12c;
+  --wrong-glow: #ff4757;
+  --text-main: #ffffff;
+  --text-dim: #b0b0b0;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: var(--font-body);
-  /* 터치 지연 방지 */
-  touch-action: manipulation; 
-  -webkit-tap-highlight-color: transparent;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
 }
 
 body {
-  background-color: var(--bg-dark);
+  background: radial-gradient(circle at center, #0b1e3e 0%, #050b18 100%);
   color: var(--text-main);
   min-height: 100vh;
+  overflow-x: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-x: hidden;
-  background-attachment: fixed;
 }
 
-/* --- [최적화] 배경 별빛 (will-change 추가로 렉 방지) --- */
-body::before, body::after {
-  content: "";
+.stars-container {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: -1;
-  will-change: transform;
+  z-index: -1; background: black; overflow: hidden;
 }
 
-body::before {
-  background-image: radial-gradient(1px 1px at 25% 15%, #fff 100%, transparent),
-                    radial-gradient(1.5px 1.5px at 50% 40%, rgba(255,255,255,0.5) 100%, transparent);
-  background-size: 300px 300px;
-  animation: bgMove 60s linear infinite;
-  opacity: 0.4;
+.star {
+  position: absolute; background: white; border-radius: 50%;
+  opacity: 0.5; animation: twinkle var(--duration) infinite ease-in-out;
 }
 
-@keyframes bgMove {
-  from { transform: translateY(0); }
-  to { transform: translateY(-300px); }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
 }
 
-/* --- 레이아웃 --- */
-.view {
-  display: none;
-  width: 90%;
-  max-width: 480px; 
-  padding: 15px;
-  margin: auto;
-}
+#app { width: 100%; max-width: 500px; padding: 20px; text-align: center; }
 
-.view.active {
-  display: block;
-  animation: fadeIn 0.4s ease-out forwards;
-}
+.view { display: none; animation: fadeIn 0.5s ease-out forwards; }
+.view.active { display: block; }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- [개선] 글래스 카드 (성능 최적화) --- */
 .glass-card {
-  background: var(--glass-bg);
-  /* 블러 농도를 8px로 낮추어 저사양 기기 렉 방지 */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: var(--card-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  padding: 35px 25px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  text-align: center;
+  border-radius: 24px; padding: 30px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
 }
 
-/* --- [개선] 버튼 (클릭감 극대화) --- */
+h1 {
+  font-size: 2rem; margin-bottom: 1rem;
+  background: linear-gradient(135deg, #fff 0%, #00d2ff 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+input[type="text"] {
+  width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border); border-radius: 12px;
+  color: white; font-size: 1.1rem; outline: none; margin-bottom: 20px;
+}
+
 .btn {
-  width: 100%;
-  padding: 16px;
-  border: none;
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--primary-purple), #5352ed);
-  color: white;
-  font-weight: 700;
-  font-size: 1.05rem;
-  cursor: pointer;
-  margin-top: 10px;
-  /* 클릭 반응을 즉각적으로 만들기 위한 설정 */
-  transition: transform 0.1s active, filter 0.2s;
-  box-shadow: 0 4px 15px rgba(125, 95, 255, 0.2);
-  user-select: none;
+  width: 100%; padding: 15px; border: none; border-radius: 12px;
+  font-size: 1.1rem; font-weight: 600; cursor: pointer;
+  background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+  color: white; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
 }
 
-/* 쫀득한 클릭감! 누르는 순간 살짝 작아짐 */
-.btn:active {
-  transform: scale(0.96);
-  filter: brightness(0.9);
-}
+.planet-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+.planet-item { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); border-radius: 16px; padding: 15px; cursor: pointer; }
+.planet-thumb-container { width: 60px; height: 60px; margin: 0 auto 10px; border-radius: 50%; overflow: hidden; background: black; }
+.planet-thumb-img { width: 100%; height: 100%; object-fit: cover; }
 
-.btn:hover {
-  filter: brightness(1.1);
-  box-shadow: 0 6px 20px rgba(125, 95, 255, 0.3);
-}
-
-/* --- 입력창 --- */
-input {
-  width: 100%;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 2px solid var(--glass-border);
-  border-radius: 12px;
-  color: white;
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-  text-align: center;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-input:focus {
-  border-color: var(--primary-purple);
-}
-
-/* --- 행성 리스트 및 아이콘 --- */
-.planet-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  margin-top: 25px;
-}
-
-.planet-item {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--glass-border);
-  border-radius: 18px;
-  padding: 15px;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s active;
-}
-
-.planet-item:active {
-  transform: scale(0.97);
-}
-
-.planet-thumb-container {
-  width: 65px; height: 65px;
-  margin: 0 auto 10px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: #000;
-}
-
-.planet-thumb-img, .planet-preview-img { 
-  width: 100%; height: 100%; object-fit: cover; 
-}
-
-/* 질문지 라디오 버튼 느낌의 옵션 */
-.option-group { display: flex; gap: 10px; margin: 20px 0; }
-.option-btn {
-  flex: 1; padding: 14px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--glass-border);
-  color: white; border-radius: 10px; cursor: pointer;
-  transition: all 0.2s;
-}
-
-.option-btn.selected {
-  background: var(--primary-purple);
-  border-color: var(--primary-purple);
-  box-shadow: 0 0 10px rgba(125, 95, 255, 0.4);
-}
-
-.option-btn:active { transform: scale(0.95); }
-
-/* --- 모달 (Z-index 및 중앙 배치 최적화) --- */
-.modal-overlay {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.85);
-  display: none; justify-content: center; align-items: center; 
-  z-index: 9999;
-}
-
-.modal-overlay.active { display: flex; }
-
-.modal-content {
-  width: 85%;
-  max-width: 400px;
-  animation: modalIn 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.28);
-}
-
-@keyframes modalIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* 정답/오답 컬러 */
-.modal-content.correct { border: 2px solid #4cd137; }
-.modal-content.incorrect { border: 2px solid #ff4757; }
+.option-group { display: flex; gap: 10px; }
+.option-btn { flex: 1; padding: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); border-radius: 10px; color: white; cursor: pointer; }
+.option-btn.selected { background: var(--primary-glow); }
