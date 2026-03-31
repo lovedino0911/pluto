@@ -1,19 +1,16 @@
-/* style.css: Planet Trial Ultimate Fix */
+/* style.css: 최종 디자인 복성 버전 */
 :root {
-  --bg-color: #050b18;
-  --card-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --primary-glow: #6c5ce7;
-  --planet-glow: #00d2ff;
-  --text-main: #ffffff;
-  --text-dim: #b0b0b0;
+  --primary: #6c5ce7;
+  --accent: #00d2ff;
+  --bg: #050b18;
+  --glass: rgba(255, 255, 255, 0.05);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+* { margin:0; padding:0; box-sizing:border-box; font-family: sans-serif; }
 
 body {
-  background: radial-gradient(circle at center, #0b1e3e 0%, #050b18 100%);
-  color: var(--text-main);
+  background: var(--bg);
+  color: white;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -21,44 +18,56 @@ body {
   overflow-x: hidden;
 }
 
-/* 핵심: 화면 숨기기 설정 (이게 없어서 다 겹쳐 보였던 것입니다) */
-.view { display: none; width: 100%; max-width: 500px; padding: 20px; animation: fadeIn 0.5s ease-out forwards; }
+/* CSS로 만든 우주 배경 (별도 이미지 파일 필요 없음) */
+.stars-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+  z-index: -1;
+}
+
+/* 화면 전환 제어 */
+.view { display: none; width: 100%; max-width: 480px; padding: 20px; animation: fadeIn 0.4s ease-in-out; }
 .view.active { display: block !important; }
 
-@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 .glass-card {
-  background: var(--card-bg);
+  background: var(--glass);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 24px;
   padding: 30px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
   text-align: center;
 }
 
-/* 사진 비율 및 크기 완전 고정 */
+/* 사진 비율 고정 */
 .planet-thumb-container {
   width: 70px; height: 70px; margin: 0 auto 10px;
-  border-radius: 50%; overflow: hidden;
-  border: 2px solid var(--glass-border); background: #000;
+  border-radius: 50%; overflow: hidden; background: #000;
+  border: 2px solid rgba(255,255,255,0.2);
 }
 .planet-thumb-img { width: 100%; height: 100%; object-fit: cover; }
 
 .planet-preview-container {
-  width: 150px; height: 150px; margin: 0 auto 20px;
-  border-radius: 50%; overflow: hidden;
-  box-shadow: 0 0 30px var(--planet-glow); background: #000;
+  width: 160px; height: 160px; margin: 0 auto 20px;
+  border-radius: 50%; overflow: hidden; background: #000;
+  box-shadow: 0 0 30px var(--accent);
 }
 .planet-preview-img { width: 100%; height: 100%; object-fit: cover; }
 
-.planet-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
-.planet-item { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); border-radius: 16px; padding: 15px; cursor: pointer; }
-.btn { width: 100%; padding: 15px; border: none; border-radius: 12px; background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%); color: white; font-weight: bold; cursor: pointer; margin-top: 10px; }
-input { width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--glass-border); color: white; border-radius: 12px; margin-bottom: 20px; outline: none; }
+.planet-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+.planet-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 15px; cursor: pointer; }
+.planet-item:hover { border-color: var(--accent); }
+
+.btn { width: 100%; padding: 15px; border: none; border-radius: 12px; background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
+input { width: 100%; padding: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 12px; margin-bottom: 20px; outline: none; text-align: center; font-size: 1.1rem; }
+
 .option-group { display: flex; gap: 10px; margin-bottom: 15px; }
-.option-btn { flex: 1; padding: 12px; background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); color: white; border-radius: 10px; cursor: pointer; }
-.option-btn.selected { background: var(--primary-glow); border-color: var(--primary-glow); }
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; }
+.option-btn { flex: 1; padding: 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 10px; cursor: pointer; }
+.option-btn.selected { background: var(--primary); border-color: var(--primary); }
+
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
 .modal-overlay.active { display: flex; }
