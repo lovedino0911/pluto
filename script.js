@@ -78,7 +78,6 @@ function startTrial(index) {
     currentPlanetIndex = index;
     currentSelections = [null, null, null];
     
-    // UI Reset: Remove 'selected' class from all option buttons
     document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
 
     const p = planets[index];
@@ -90,8 +89,6 @@ function startTrial(index) {
 
 function selectOption(btn, qIdx, val) {
     currentSelections[qIdx] = val;
-    
-    // Find the group and update classes only within it for maximum speed
     const group = btn.parentElement;
     group.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
@@ -107,7 +104,6 @@ function submitTrial() {
     const modalContent = modal.querySelector('.glass-card');
     const modalTitle = document.getElementById('modal-title');
     
-    // Reset modal classes
     modalContent.classList.remove('correct', 'wrong');
     modalTitle.classList.remove('text-correct', 'text-wrong');
 
@@ -139,7 +135,6 @@ function showFinalResult() {
     document.getElementById('result-student-info').innerText = `학번: ${studentId}`;
     
     const snackBox = document.getElementById('snack-award');
-    const PASS_SCORE = 3;
 
     if (score === planets.length) {
         snackBox.style.display = 'block';
@@ -149,15 +144,18 @@ function showFinalResult() {
         document.getElementById('result-comment').innerText = "고생하셨습니다! 몇 가지 판결을 더 복습해 볼까요?";
     }
 
-// ✅ 여기 핵심 수정
-    if (score >= PASS_SCORE) {
-        const formData = new FormData();
-        const displayId = score === planets.length ? `${studentId} (만점)` : studentId;
-        formData.append(ENTRY_ID, displayId);
-        fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData });
-    }
-    
+    // 🔥 핵심: 항상 전송 + 조건에 따라 표시
+    const PASS_SCORE = 3;
+    let displayId = studentId;
 
+    if (score >= PASS_SCORE) displayId += " (통과)";
+    if (score === planets.length) displayId += " ⭐만점";
+
+    const formData = new FormData();
+    formData.append(ENTRY_ID, displayId);
+    fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData });
+
+    // 모든 참여자 기록 (기존 유지)
     if (studentId !== "admin@1234") {
         localStorage.setItem(`pluto_trial_${studentId}`, 'true');
     }
