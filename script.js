@@ -139,6 +139,8 @@ function showFinalResult() {
     document.getElementById('result-student-info').innerText = `학번: ${studentId}`;
     
     const snackBox = document.getElementById('snack-award');
+    const PASS_SCORE = 3;
+
     if (score === planets.length) {
         snackBox.style.display = 'block';
         document.getElementById('result-comment').innerText = "천문학 분야에 뛰어난 재능이 있으시군요! 모든 판결이 정확합니다.";
@@ -147,10 +149,14 @@ function showFinalResult() {
         document.getElementById('result-comment').innerText = "고생하셨습니다! 몇 가지 판결을 더 복습해 볼까요?";
     }
 
-    const formData = new FormData();
-    const displayId = score === planets.length ? `${studentId} (만점)` : studentId;
-    formData.append(ENTRY_ID, displayId);
-    fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData });
+// ✅ 여기 핵심 수정
+    if (score >= PASS_SCORE) {
+        const formData = new FormData();
+        const displayId = score === planets.length ? `${studentId} (만점)` : studentId;
+        formData.append(ENTRY_ID, displayId);
+        fetch(GOOGLE_FORM_URL, { method: 'POST', mode: 'no-cors', body: formData });
+    }
+    
 
     if (studentId !== "admin@1234") {
         localStorage.setItem(`pluto_trial_${studentId}`, 'true');
